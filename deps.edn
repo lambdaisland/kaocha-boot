@@ -1,0 +1,13 @@
+{:paths ["src" "test" "resources"]
+
+ :deps {
+        ;;boot/boot           {:mvn/version "2.8.2"}
+        ;;boot/pod            {:mvn/version "2.8.2"}
+        }
+
+ :aliases
+ {:dev
+  {}
+
+  :test
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "0.0-319" :exclusions [org.clojure/clojure]}}}}}
