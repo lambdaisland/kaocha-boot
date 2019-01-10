@@ -1,7 +1,7 @@
 (ns kaocha.boot-task
   {:boot/export-tasks true}
   (:refer-clojure :exclude [test])
-  (:require [boot.pod  :as pod]
+  (:require [boot.pod :as pod]
             [boot.task.built-in :refer [target]]
             [boot.core :as boot]
             [clojure.java.io :as io]))
@@ -11,7 +11,6 @@
       (update-in [:dependencies] conj
                  '[lambdaisland/kaocha "0.0-337"])
       pod/make-pod))
-
 
 (boot/deftask kaocha
   "Run tests with Kaocha."
@@ -37,6 +36,7 @@
                '[kaocha.api :as api]
                '[kaocha.jit :refer [jit]]
                '[kaocha.runner :as runner]
+               '[kaocha.classpath :as classpath]
                '[clojure.set :as set]
                '[clojure.string :as str]
                '[clojure.tools.cli :as cli]
@@ -46,8 +46,8 @@
         (apply str
                "\n"
                "  -o, --options EDN                  EDN map of additional options.\n\n"
-               "Plugin-specific options can be specified using map syntax, e.g.\n\n
-   boot kaocha --options '{:randomize false}'\n\n"
+               "Plugin-specific options can be specified using map syntax, e.g.\n\n"
+               "   boot kaocha --options '{:randomize false}'\n\n"
                "These additional options are recognized:\n\n"
                (interpose "\n"
                           (map (fn [{:keys [id required desc]}]
@@ -55,28 +55,29 @@
                                (#'cli/compile-option-specs specs)))))
 
       (try+
-       (let [options           (merge (cond-> ~*opts*
-                                        ~no-color (assoc :color false)
-                                        ~no-watch (assoc :watch false)
-                                        :always   (dissoc :no-color :no-watch))
-                                      ~options)
-             config            (config/load-config (:config-file options "tests.edn"))
-             plugin-chain      (plugin/load-all (concat (:kaocha/plugins config) ~plugin))
-             plugin-options    (plugin/run-hook* plugin-chain :kaocha.hooks/cli-options [])
-             {:keys [summary]} (cli/parse-opts [] @#'runner/cli-options)
-             config            (-> config
-                                   (config/apply-cli-opts options)
-                                   (config/apply-cli-args ~suite))
-             exit-code
-             (plugin/with-plugins plugin-chain
-               (runner/run {:config  config
-                            :options options
-                            :summary (str "USAGE:\n\nboot kaocha [OPTIONS]...\n\n"
-                                          "  -s, --suite SUITE                  Test suite(s) to run.\n"
-                                          summary (plugin-option-summary plugin-options))
-                            :suites  ~suite}))]
-         (when (not= 0 exit-code)
-           (System/exit exit-code)))
+       (with-redefs [classpath/add-classpath boot.pod/add-classpath]
+         (let [options           (merge (cond-> ~*opts*
+                                          ~no-color (assoc :color false)
+                                          ~no-watch (assoc :watch false)
+                                          :always   (dissoc :no-color :no-watch))
+                                        ~options)
+               config            (config/load-config (:config-file options "tests.edn"))
+               plugin-chain      (plugin/load-all (concat (:kaocha/plugins config) ~plugin))
+               plugin-options    (plugin/run-hook* plugin-chain :kaocha.hooks/cli-options [])
+               {:keys [summary]} (cli/parse-opts [] @#'runner/cli-options)
+               config            (-> config
+                                     (config/apply-cli-opts options)
+                                     (config/apply-cli-args ~suite))
+               exit-code
+               (plugin/with-plugins plugin-chain
+                 (runner/run {:config  config
+                              :options options
+                              :summary (str "USAGE:\n\nboot kaocha [OPTIONS]...\n\n"
+                                            "  -s, --suite SUITE                  Test suite(s) to run.\n"
+                                            summary (plugin-option-summary plugin-options))
+                              :suites  ~suite}))]
+           (when (not= 0 exit-code)
+             (System/exit exit-code))))
 
        (catch :kaocha/early-exit {exit-code :kaocha/early-exit}
          (when (not= 0 exit-code)

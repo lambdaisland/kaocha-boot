@@ -1,10 +1,8 @@
 # Unreleased
 
-## Added
-
 ## Fixed
 
-## Changed
+- Dynamically add test paths to classpath
 
 # 0.0-5 (2018-12-31 / 3962fb0)
 
