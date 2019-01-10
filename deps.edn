@@ -3,5 +3,6 @@
  :deps {lambdaisland/kaocha {:mvn/version "0.0-340" :exclusions [org.clojure/clojure]}}
 
  :aliases
- {:dev {}
-  :test {:extra-deps {}}}}
+ {:dev  {}
+  :test {:extra-deps {lambdaisland/kaocha-cucumber {:mvn/version "0.0-36"}
+                      akvo/fs                      {:mvn/version "20180904-152732.6dad3934"}}}}}
