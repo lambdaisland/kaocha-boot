@@ -4,5 +4,6 @@
 
  :aliases
  {:dev  {}
-  :test {:extra-deps {lambdaisland/kaocha-cucumber {:mvn/version "0.0-36"}
-                      akvo/fs                      {:mvn/version "20180904-152732.6dad3934"}}}}}
+  :test {:extra-deps {lambdaisland/kaocha-cucumber  {:mvn/version "0.0-36"}
+                      lambdaisland/kaocha-cloverage {:mvn/version "0.0-22"}
+                      akvo/fs                       {:mvn/version "20180904-152732.6dad3934"}}}}}
