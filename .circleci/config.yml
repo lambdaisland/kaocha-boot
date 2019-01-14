@@ -10,6 +10,7 @@ commands:
       clojure_version:
         type: string
     steps:
+      - run: apt-get install maven
       - checkout
       - clojure/with_cache:
           cache_version: << parameters.clojure_version >>
