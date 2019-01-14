@@ -12,6 +12,12 @@ Feature: Kaocha boot task
 
     (require '[kaocha.boot-task :refer [kaocha]])
     """
+    And a file named "boot.properties" with:
+    """
+    BOOT_CLOJURE_NAME=org.clojure/clojure
+    BOOT_CLOJURE_VERSION=1.10.0
+    BOOT_VERSION=2.8.2
+    """
 
   Scenario: Running tests with boot
     Given a file named "test/sample/sample_test.clj" with:
