@@ -31,7 +31,7 @@ Feature: Kaocha boot task
 
   Scenario: Getting Kaocha's help message
     When I run `boot kaocha --test-help`
-    Then the output should contain
+    Then the output should contain:
     """
     USAGE:
 
