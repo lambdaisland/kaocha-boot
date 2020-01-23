@@ -41,10 +41,6 @@ Feature: Kaocha boot task
     """
     USAGE:
 
-    clj -m kaocha.runner [OPTIONS]... [TEST-SUITE]...
-
-    USAGE:
-
     boot kaocha [OPTIONS]...
 
       -s, --suite SUITE                  Test suite(s) to run.
