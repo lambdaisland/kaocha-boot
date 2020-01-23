@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>lambdaisland</groupId>
   <artifactId>kaocha-boot</artifactId>
-  <version>0.0-14</version>
+  <version>0.0-20</version>
   <name>kaocha-boot</name>
   <description>Boot task for the Kaocha test runner</description>
   <url>https://github.com/lambdaisland/kaocha-boot</url>
@@ -22,7 +22,7 @@
     <url>https://github.com/lambdaisland/kaocha-boot</url>
     <connection>scm:git:git://github.com/lambdaisland/kaocha-boot.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/lambdaisland/kaocha-boot.git</developerConnection>
-    <tag>a7eadbbad895586f29676af02519662105b25c02</tag>
+    <tag>f54476a8e34de458022790861adb77dfc229e6e1</tag>
   </scm>
   <dependencies>
     <dependency>
@@ -60,7 +60,7 @@
         <configuration>
           <archive>
             <manifestEntries>
-              <Git-Revision>a7eadbbad895586f29676af02519662105b25c02</Git-Revision>
+              <Git-Revision>f54476a8e34de458022790861adb77dfc229e6e1</Git-Revision>
             </manifestEntries>
           </archive>
         </configuration>
