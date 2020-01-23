@@ -13,7 +13,7 @@ In your `build.boot` add the Kaocha dependency, and import the Kaocha task
 ``` clojure
 ;; build.boot
 (set-env! :source-paths #{"src"}
-          :dependencies '[[lambdaisland/kaocha-boot "0.0-14"]])
+          :dependencies '[[lambdaisland/kaocha-boot "0.0-20"]])
 
 (require '[kaocha.boot-task :refer [kaocha]])
 ```
