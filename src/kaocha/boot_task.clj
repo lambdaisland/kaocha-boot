@@ -8,8 +8,6 @@
 
 (defn make-kaocha-pod []
   (-> (boot/get-env)
-      (update-in [:dependencies] conj
-                 '[lambdaisland/kaocha "0.0-337"])
       pod/make-pod))
 
 (boot/deftask kaocha
